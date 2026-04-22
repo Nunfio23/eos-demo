@@ -274,13 +274,10 @@ RETURNS SETOF UUID AS $$
   WHERE p.user_id = auth.uid();
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
+-- Placeholder: se redefine correctamente despues de crear class_schedules (seccion 8)
 CREATE OR REPLACE FUNCTION public.my_teacher_student_ids()
 RETURNS SETOF UUID AS $$
-  SELECT DISTINCT e.student_id
-  FROM public.class_schedules cs
-  JOIN public.enrollments e ON e.section_id = cs.section_id
-    AND e.school_year_id = cs.school_year_id
-  WHERE cs.teacher_id = public.my_teacher_id();
+  SELECT id FROM public.students WHERE false;
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
 -- ============================================================
@@ -1114,6 +1111,16 @@ CREATE POLICY "cs_select_auth"   ON public.class_schedules FOR SELECT USING (aut
 CREATE POLICY "cs_admin_all"     ON public.class_schedules FOR ALL    USING (EXISTS (SELECT 1 FROM profiles WHERE id=auth.uid() AND role IN ('master','direccion','administracion')));
 CREATE POLICY "cs_teacher_insert" ON public.class_schedules FOR INSERT WITH CHECK (EXISTS (SELECT 1 FROM profiles WHERE id=auth.uid() AND role IN ('master','direccion','administracion')) OR EXISTS (SELECT 1 FROM teachers WHERE user_id=auth.uid() AND id=teacher_id));
 CREATE INDEX IF NOT EXISTS idx_class_schedules_section ON public.class_schedules(section_id, school_year_id, day_of_week);
+
+-- Redefinicion correcta de my_teacher_student_ids ahora que class_schedules existe
+CREATE OR REPLACE FUNCTION public.my_teacher_student_ids()
+RETURNS SETOF UUID AS $$
+  SELECT DISTINCT e.student_id
+  FROM public.class_schedules cs
+  JOIN public.enrollments e ON e.section_id = cs.section_id
+    AND e.school_year_id = cs.school_year_id
+  WHERE cs.teacher_id = public.my_teacher_id();
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
 
 -- ============================================================
 -- 9. E6: EQUIPO / EXPEDIENTE LABORAL
