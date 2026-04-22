@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2dbf"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <!-- Escudo base -->
+  <path d="M50 6 L86 22 L86 56 C86 76 68 91 50 96 C32 91 14 76 14 56 L14 22 Z" fill="url(#shieldGrad)"/>
+  <!-- Cruz cristiana -->
+  <rect x="46" y="26" width="8" height="42" rx="2" fill="white" opacity="0.95"/>
+  <rect x="30" y="40" width="40" height="8" rx="2" fill="white" opacity="0.95"/>
+  <!-- Rayo pequeño (Tesla) — esquina inferior derecha -->
+  <path d="M65 58 L59 70 L64 70 L58 82 L72 67 L65 67 Z" fill="white" opacity="0.55"/>
+</svg>

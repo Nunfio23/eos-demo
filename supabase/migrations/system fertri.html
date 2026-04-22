@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FERTRI — Landing + Sistema de Control de Ventas</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#0f1620; --muted:#93a4b7; --text:#eaf2ff;
+      --line:#1b2635; --accent:#7c5cff; --good:#2dd4bf; --warn:#fbbf24; --bad:#fb7185;
+      --shadow: 0 16px 40px rgba(0,0,0,.45);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--sans); color:var(--text); background:
+      radial-gradient(1200px 700px at 10% -10%, rgba(124,92,255,.35), transparent 60%),
+      radial-gradient(900px 500px at 90% 0%, rgba(45,212,191,.18), transparent 55%),
+      radial-gradient(700px 500px at 30% 120%, rgba(251,113,133,.12), transparent 55%),
+      var(--bg);
+    }
+    a{color:inherit}
+    .wrap{max-width:1200px; margin:0 auto; padding:28px 18px 48px}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,20,.88), rgba(11,15,20,.55));
+      border-bottom:1px solid rgba(27,38,53,.6);
+    }
+    .topbar .inner{max-width:1200px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{
+      width:34px;height:34px;border-radius:12px;
+      background: conic-gradient(from 210deg, var(--accent), var(--good), var(--accent));
+      box-shadow: 0 10px 22px rgba(124,92,255,.25);
+    }
+    .brand b{letter-spacing:.4px}
+    .nav{display:flex; gap:10px; flex-wrap:wrap}
+    .nav a{
+      text-decoration:none; font-size:13px; color:var(--muted);
+      padding:8px 10px; border:1px solid transparent; border-radius:999px;
+    }
+    .nav a:hover{border-color:rgba(124,92,255,.35); color:var(--text); background:rgba(124,92,255,.08)}
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      background: linear-gradient(135deg, rgba(124,92,255,1), rgba(45,212,191,.9));
+      color:#071018; font-weight:800;
+      padding:10px 14px; border-radius:999px;
+      box-shadow: 0 14px 32px rgba(124,92,255,.22);
+    }
+    .btn.secondary{
+      background: transparent; color:var(--text);
+      border:1px solid rgba(147,164,183,.25);
+      box-shadow:none; font-weight:700;
+    }
+    .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:18px; padding:26px 0 8px}
+    @media (max-width: 920px){ .hero{grid-template-columns:1fr} }
+    .card{
+      background: linear-gradient(180deg, rgba(15,22,32,.95), rgba(15,22,32,.72));
+      border:1px solid rgba(27,38,53,.8);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero .card{padding:22px}
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px; border:1px solid rgba(124,92,255,.35);
+      background: rgba(124,92,255,.10); color: #d8d0ff; font-size:12px;
+    }
+    h1{margin:12px 0 10px; font-size:40px; line-height:1.05; letter-spacing:-.6px}
+    @media (max-width:520px){h1{font-size:34px}}
+    .sub{color:var(--muted); font-size:15px; line-height:1.55; max-width:64ch}
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .grid{
+      display:grid; grid-template-columns: repeat(12, 1fr); gap:14px; margin-top:18px
+    }
+    .col-4{grid-column: span 4}
+    .col-6{grid-column: span 6}
+    .col-8{grid-column: span 8}
+    .col-12{grid-column: span 12}
+    @media (max-width: 920px){
+      .col-4,.col-6,.col-8{grid-column: span 12}
+    }
+    .section{padding-top:18px}
+    .section .head{display:flex; align-items:flex-end; justify-content:space-between; gap:10px; margin-bottom:10px}
+    .section h2{margin:0; font-size:18px; letter-spacing:.2px}
+    .section .hint{color:var(--muted); font-size:13px}
+    .box{padding:16px}
+    .kpis{display:grid; grid-template-columns: repeat(4, 1fr); gap:10px}
+    @media (max-width:920px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:520px){.kpis{grid-template-columns:1fr}}
+    .kpi{
+      padding:12px; border-radius:14px;
+      border:1px solid rgba(27,38,53,.8);
+      background: rgba(11,15,20,.35);
+    }
+    .kpi .label{color:var(--muted); font-size:12px}
+    .kpi .val{font-size:18px; font-weight:900; margin-top:6px}
+    .kpi .delta{margin-top:6px; font-size:12px; color:var(--muted)}
+    .delta b{color:var(--good)}
+    .split{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    @media (max-width:920px){.split{grid-template-columns:1fr}}
+    .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.6; font-size:14px}
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .pill{
+      border:1px solid rgba(147,164,183,.2);
+      background: rgba(147,164,183,.07);
+      color: #d7e2f5;
+      padding:8px 10px; border-radius:999px; font-size:12px;
+    }
+    .pill strong{color:#fff}
+    .form{
+      display:grid; grid-template-columns: repeat(12, 1fr); gap:10px
+    }
+    .field{grid-column: span 6}
+    .field.third{grid-column: span 4}
+    .field.full{grid-column: span 12}
+    @media (max-width:720px){
+      .field,.field.third{grid-column:span 12}
+    }
+    label{display:block; font-size:12px; color:var(--muted); margin:2px 0 6px}
+    input, select, textarea{
+      width:100%;
+      background: rgba(11,15,20,.55);
+      border:1px solid rgba(27,38,53,.9);
+      border-radius:12px;
+      padding:10px 10px;
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(124,92,255,.6);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.12);
+    }
+    textarea{min-height:86px; resize:vertical}
+    .row-actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+    .muted{color:var(--muted)}
+    .table{
+      width:100%; border-collapse: collapse; overflow:hidden;
+      border-radius: 14px; border:1px solid rgba(27,38,53,.8);
+    }
+    .table th, .table td{
+      padding:10px 10px; text-align:left; font-size:13px; border-bottom:1px solid rgba(27,38,53,.7);
+    }
+    .table th{color:#cfe1ff; font-size:12px; text-transform:uppercase; letter-spacing:.08em; background: rgba(11,15,20,.4)}
+    .table td{color:#eaf2ff}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid rgba(147,164,183,.22);
+      background: rgba(147,164,183,.06);
+    }
+    .badge.good{border-color: rgba(45,212,191,.35); background: rgba(45,212,191,.10)}
+    .badge.warn{border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.10)}
+    .badge.bad{border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.10)}
+    .mini{
+      font-family: var(--mono); font-size:12px; color:#cfe1ff;
+      padding:10px; border-radius:14px; border:1px dashed rgba(124,92,255,.35);
+      background: rgba(124,92,255,.06);
+      overflow:auto;
+    }
+    .canvas-wrap{
+      border:1px solid rgba(27,38,53,.8);
+      border-radius:14px;
+      background: rgba(11,15,20,.35);
+      padding:10px;
+    }
+    canvas{width:100%; height:220px; display:block}
+    .footer{
+      margin-top:18px; color:var(--muted); font-size:12px; text-align:center;
+      padding:18px 8px;
+      border-top:1px solid rgba(27,38,53,.6);
+    }
+    .note{
+      font-size:12px; color:var(--muted); line-height:1.6;
+      border-left: 3px solid rgba(124,92,255,.75);
+      padding-left:10px;
+    }
+    .danger{color: #ffd1db}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>FERTRI</b>
+          <div class="muted" style="font-size:12px">Landing + Control de Ventas + Proyecciones</div>
+        </div>
+      </div>
+      <div class="nav" aria-label="Navegación">
+        <a href="#estrategia">Estrategia</a>
+        <a href="#funnel">Funnel</a>
+        <a href="#proyecciones">Proyecciones</a>
+        <a href="#crm">Control de Ventas</a>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center">
+        <button class="btn secondary" id="btnDemo">Cargar demo</button>
+        <button class="btn" id="btnCTA">Quiero vender hoy</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="card">
+        <span class="tag">🔥 FERTRI / EXTOL — ferretería digital con cerebro</span>
+        <h1>Vendé herramientas como si tuvieras un ejército…<br/>sin convertirte en ferretero esclavo.</h1>
+        <p class="sub">
+          Esta landing no es solo “bonita”: incluye una <b>estrategia clara</b>, un <b>funnel</b>,
+          y un <b>sistema de control de ventas</b> con <b>proyecciones</b> (visitas → leads → ventas → utilidad).
+        </p>
+        <div class="hero-actions">
+          <button class="btn" onclick="document.querySelector('#proyecciones').scrollIntoView({behavior:'smooth'})">Ver proyecciones</button>
+          <button class="btn secondary" onclick="document.querySelector('#crm').scrollIntoView({behavior:'smooth'})">Abrir control de ventas</button>
+        </div>
+
+        <div class="pillrow">
+          <div class="pill"><strong>Oferta inicial:</strong> 3–5 productos ganadores</div>
+          <div class="pill"><strong>Canal:</strong> Meta Ads → WhatsApp</div>
+          <div class="pill"><strong>Motor:</strong> Agente IA + CRM</div>
+          <div class="pill"><strong>Meta:</strong> Repetición + combos</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="box">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+            <div>
+              <div class="muted" style="font-size:12px">Estado del sistema</div>
+              <div style="font-size:18px; font-weight:900; margin-top:4px">Listo para ejecutar</div>
+            </div>
+            <span class="badge good">● Online</span>
+          </div>
+          <p class="note" style="margin-top:12px">
+            Filosofía FERTRI: <b>no compitas por precio</b>. Compite por <b>rapidez</b>,
+            <b>confianza</b> y <b>recomendación inteligente</b> (el cliente describe el problema, el sistema sugiere la herramienta correcta).
+          </p>
+
+          <div style="margin-top:12px" class="mini" id="miniScript">
+            Funnel mínimo viable:
+            Meta Ads → WhatsApp → Agente IA (califica) → Cotiza → Cobro → Entrega → Recompra/Combo
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+            <button class="btn secondary" onclick="seedProducts()">Plantilla productos ganadores</button>
+            <button class="btn secondary" onclick="exportData()">Exportar leads (CSV)</button>
+          </div>
+          <div class="muted" style="margin-top:10px; font-size:12px">
+            *Todo se guarda en tu navegador (localStorage) para que puedas probar rápido.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTRATEGIA -->
+    <section class="section" id="estrategia">
+      <div class="head">
+        <h2>Estrategia (la parte donde el dinero decide si te ama o no)</h2>
+        <div class="hint">Enfoque: validación + repetición + margen</div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-6">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Paso 1</div>
+            <div style="font-size:16px; font-weight:900">Lanzamiento con 3–5 productos ganadores</div>
+            <ul class="list">
+              <li>Elegí productos con demanda constante, ticket decente y margen sano.</li>
+              <li>Empaquetá: <b>producto + accesorio</b> (combos) para subir ticket promedio.</li>
+              <li>Repetí: el catálogo infinito es para fase 2, no para sobrevivir la fase 1.</li>
+            </ul>
+            <div class="pillrow">
+              <div class="pill"><strong>Ejemplos:</strong> taladro + brocas</div>
+              <div class="pill"><strong>Ejemplos:</strong> amoladora + discos</div>
+              <div class="pill"><strong>Ejemplos:</strong> bomba + válvula</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-6">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Paso 2</div>
+            <div style="font-size:16px; font-weight:900">Modelo híbrido: vendé sin inventario pesado</div>
+            <ul class="list">
+              <li>Acuerdos con proveedores (retiro “cuando ya está vendida”).</li>
+              <li>Entrega: propia o aliado logístico según zona.</li>
+              <li>Control: cada lead tiene etapa y responsable (humano o IA).</li>
+            </ul>
+            <div class="note" style="margin-top:10px">
+              Objetivo: <b>validar demanda</b> con riesgo bajo y luego sí, comprar inventario inteligente.
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-12">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Paso 3</div>
+            <div style="font-size:16px; font-weight:900">FERTRI como sistema: no vendés tornillos, vendés confianza</div>
+            <div class="split" style="margin-top:10px">
+              <div>
+                <div class="muted" style="font-size:12px">Lo que ve el cliente</div>
+                <ul class="list">
+                  <li>Respuesta rápida en WhatsApp.</li>
+                  <li>Recomendación “según problema” (no según capricho).</li>
+                  <li>Cotización clara + entrega confiable.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="muted" style="font-size:12px">Lo que corre detrás</div>
+                <ul class="list">
+                  <li>Agente IA califica: presupuesto, zona, urgencia.</li>
+                  <li>CRM simple: etapas, notas, seguimiento.</li>
+                  <li>Automatización: recordatorios, upsell, recompra.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mini" style="margin-top:10px">
+              Regla CEO: “Si el sistema no puede funcionar sin mí, entonces no es un negocio: es un hobby caro.”
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNNEL -->
+    <section class="section" id="funnel">
+      <div class="head">
+        <h2>Funnel FERTRI (de “solo estoy viendo” a “dámelo ya”)</h2>
+        <div class="hint">Meta Ads → WhatsApp → IA → Venta → Recompra</div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-4">
+          <div class="box">
+            <div style="font-size:14px; font-weight:900">1) Tráfico</div>
+            <p class="muted" style="margin:8px 0 0; font-size:13px; line-height:1.55">
+              Campañas por intención: <b>“taladro”, “bomba de agua”, “herramientas para albañil”</b>.
+              Creativo simple: problema → solución → WhatsApp.
+            </p>
+          </div>
+        </div>
+        <div class="card col-4">
+          <div class="box">
+            <div style="font-size:14px; font-weight:900">2) Conversación</div>
+            <p class="muted" style="margin:8px 0 0; font-size:13px; line-height:1.55">
+              WhatsApp con <b>Agente IA</b>: pregunta 3 cosas, recomienda 1–2 opciones, y arma cotización.
+            </p>
+          </div>
+        </div>
+        <div class="card col-4">
+          <div class="box">
+            <div style="font-size:14px; font-weight:900">3) Cierre + Recompra</div>
+            <p class="muted" style="margin:8px 0 0; font-size:13px; line-height:1.55">
+              Cierre humano solo cuando ya está caliente. Luego: combos, accesorios y recordatorios de recompra.
+            </p>
+          </div>
+        </div>
+
+        <div class="card col-12">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Script sugerido para el Agente IA (resumen)</div>
+            <div class="mini" id="agentScript">
+1) ¿Qué vas a hacer? (perforar concreto / madera / metal / cortar / pulir / bombear agua / etc.)
+2) ¿Uso: ocasional o diario? (hogar vs trabajo)
+3) ¿Presupuesto aproximado y zona de entrega?
+→ Recomiendo 2 opciones (económica / pro) + accesorios necesarios
+→ Ofrezco entrega + garantía + método de pago
+→ Si acepta: genero orden y confirmo
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECCIONES -->
+    <section class="section" id="proyecciones">
+      <div class="head">
+        <h2>Proyecciones (la calculadora que te regresa a la realidad)</h2>
+        <div class="hint">Cambia números y mira ventas + utilidad proyectada</div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-8">
+          <div class="box">
+            <div class="form" id="projectionForm">
+              <div class="field third">
+                <label>Visitas / mes</label>
+                <input type="number" min="0" step="100" id="visits" value="10000">
+              </div>
+              <div class="field third">
+                <label>CTR (click rate) %</label>
+                <input type="number" min="0" step="0.1" id="ctr" value="1.2">
+              </div>
+              <div class="field third">
+                <label>CPC (costo por click) $</label>
+                <input type="number" min="0" step="0.01" id="cpc" value="0.18">
+              </div>
+
+              <div class="field third">
+                <label>Conversión a lead %</label>
+                <input type="number" min="0" step="0.1" id="leadRate" value="6">
+              </div>
+              <div class="field third">
+                <label>Conversión a venta %</label>
+                <input type="number" min="0" step="0.1" id="saleRate" value="18">
+              </div>
+              <div class="field third">
+                <label>Ticket promedio $</label>
+                <input type="number" min="0" step="1" id="aov" value="85">
+              </div>
+
+              <div class="field third">
+                <label>Margen bruto %</label>
+                <input type="number" min="0" step="0.1" id="margin" value="28">
+              </div>
+              <div class="field third">
+                <label>Costo entrega / orden $</label>
+                <input type="number" min="0" step="0.5" id="ship" value="2.5">
+              </div>
+              <div class="field third">
+                <label>Otros costos fijos / mes $</label>
+                <input type="number" min="0" step="10" id="fixed" value="250">
+              </div>
+
+              <div class="field full">
+                <div class="row-actions">
+                  <span class="muted" id="lastSaved">—</span>
+                  <button class="btn secondary" type="button" onclick="saveProjection()">Guardar</button>
+                  <button class="btn" type="button" onclick="recalc()">Recalcular</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="canvas-wrap" style="margin-top:10px">
+              <canvas id="chart" width="900" height="260" aria-label="Gráfico de proyección" role="img"></canvas>
+            </div>
+
+            <div class="muted" style="margin-top:10px; font-size:12px; line-height:1.55">
+              *Modelo simplificado para decidir rápido. En la vida real, hay estacionalidad, devoluciones, y el universo ama el caos.
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-4">
+          <div class="box">
+            <div class="muted" style="font-size:12px">KPIs proyectados (mensual)</div>
+            <div class="kpis" style="margin-top:10px">
+              <div class="kpi">
+                <div class="label">Clicks</div>
+                <div class="val" id="kClicks">—</div>
+                <div class="delta">Base: visitas × CTR</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Leads</div>
+                <div class="val" id="kLeads">—</div>
+                <div class="delta">Clicks × lead%</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Ventas</div>
+                <div class="val" id="kSales">—</div>
+                <div class="delta">Leads × venta%</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Ingreso</div>
+                <div class="val" id="kRevenue">—</div>
+                <div class="delta">Ventas × ticket</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Ads spend</div>
+                <div class="val" id="kSpend">—</div>
+                <div class="delta">Clicks × CPC</div>
+              </div>
+              <div class="kpi">
+                <div class="label">CAC</div>
+                <div class="val" id="kCAC">—</div>
+                <div class="delta">Spend / ventas</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Utilidad bruta</div>
+                <div class="val" id="kGross">—</div>
+                <div class="delta">Ingreso × margen%</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Utilidad neta</div>
+                <div class="val" id="kNet">—</div>
+                <div class="delta"><b>Gross</b> − ads − entrega − fijos</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px" class="note">
+              Consejo nerd: si tu <b>CAC</b> (costo por adquirir cliente) es menor que tu
+              <b>margen por orden</b>, puedes escalar sin llorar.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRM / CONTROL DE VENTAS -->
+    <section class="section" id="crm">
+      <div class="head">
+        <h2>Control de Ventas (CRM ultra simple)</h2>
+        <div class="hint">Registrar lead → etapa → seguimiento → cierre</div>
+      </div>
+
+      <div class="grid">
+        <div class="card col-6">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Nuevo lead</div>
+            <div class="form" style="margin-top:10px">
+              <div class="field">
+                <label>Nombre</label>
+                <input id="leadName" placeholder="Ej: Carlos Pérez">
+              </div>
+              <div class="field">
+                <label>Teléfono / WhatsApp</label>
+                <input id="leadPhone" placeholder="Ej: +503 7xxx xxxx">
+              </div>
+
+              <div class="field third">
+                <label>Producto interés</label>
+                <input id="leadProduct" placeholder="Ej: Taladro 13mm">
+              </div>
+              <div class="field third">
+                <label>Etapa</label>
+                <select id="leadStage">
+                  <option value="Nuevo">Nuevo</option>
+                  <option value="Calificado">Calificado</option>
+                  <option value="Cotizado">Cotizado</option>
+                  <option value="Negociación">Negociación</option>
+                  <option value="Ganado">Ganado</option>
+                  <option value="Perdido">Perdido</option>
+                </select>
+              </div>
+              <div class="field third">
+                <label>Valor estimado $</label>
+                <input type="number" min="0" step="1" id="leadValue" value="85">
+              </div>
+
+              <div class="field full">
+                <label>Notas</label>
+                <textarea id="leadNotes" placeholder="Ej: Quiere entrega hoy, zona Santa Tecla, prefiere pago transferencia..."></textarea>
+              </div>
+
+              <div class="field full">
+                <div class="row-actions">
+                  <button class="btn secondary" type="button" onclick="clearLeadForm()">Limpiar</button>
+                  <button class="btn" type="button" onclick="addLead()">Guardar lead</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top:10px">
+              Tip: tu IA debería llenar esto automáticamente cuando chatea (nombre, etapa, producto, monto).
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-6">
+          <div class="box">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:10px">
+              <div>
+                <div class="muted" style="font-size:12px">Pipeline</div>
+                <div style="font-size:16px; font-weight:900">Leads y estado</div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+                <select id="filterStage" onchange="renderLeads()">
+                  <option value="Todos">Todos</option>
+                  <option value="Nuevo">Nuevo</option>
+                  <option value="Calificado">Calificado</option>
+                  <option value="Cotizado">Cotizado</option>
+                  <option value="Negociación">Negociación</option>
+                  <option value="Ganado">Ganado</option>
+                  <option value="Perdido">Perdido</option>
+                </select>
+                <button class="btn secondary" onclick="clearAll()">Borrar todo</button>
+              </div>
+            </div>
+
+            <div style="margin-top:10px; overflow:auto">
+              <table class="table" aria-label="Tabla de leads">
+                <thead>
+                  <tr>
+                    <th>Lead</th>
+                    <th>Etapa</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="leadRows"></tbody>
+              </table>
+            </div>
+
+            <div class="muted" style="margin-top:10px; font-size:12px">
+              Pro tip: El “seguimiento” es donde vive el dinero. El “me escribió” no cuenta como venta.
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-12">
+          <div class="box">
+            <div class="muted" style="font-size:12px">Resumen pipeline</div>
+            <div class="kpis" style="margin-top:10px">
+              <div class="kpi">
+                <div class="label">Total leads</div>
+                <div class="val" id="pLeads">—</div>
+                <div class="delta">Registro local</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Ganados</div>
+                <div class="val" id="pWon">—</div>
+                <div class="delta">Etapa = Ganado</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Ingreso estimado</div>
+                <div class="val" id="pRev">—</div>
+                <div class="delta">Suma valores ganados</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Tasa cierre</div>
+                <div class="val" id="pClose">—</div>
+                <div class="delta">Ganados / leads</div>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top:12px">
+              Si tu tasa de cierre es baja: no es “mala suerte”. Es <b>oferta</b>, <b>seguimiento</b> o <b>confianza</b>.
+              Eso se corrige, no se llora.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      FERTRI — sistema de prueba en HTML (sin backend). Ideal para prototipar rápido y luego pasarlo a tu stack (Next/Supabase/n8n/WhatsApp).
+    </div>
+  </div>
+
+  <script>
+    // ========= Helpers =========
+    const $ = (q) => document.querySelector(q);
+    const fmtMoney = (n) => {
+      const v = Number.isFinite(n) ? n : 0;
+      return "$" + v.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 0});
+    };
+    const fmtNum = (n) => (Number.isFinite(n) ? n.toLocaleString() : "—");
+
+    // ========= Projection model =========
+    const PROJ_KEY = "fertri_projection_v1";
+    function getProjectionInputs(){
+      return {
+        visits: +$("#visits").value || 0,
+        ctr: (+$("#ctr").value || 0) / 100,
+        cpc: +$("#cpc").value || 0,
+        leadRate: (+$("#leadRate").value || 0) / 100,
+        saleRate: (+$("#saleRate").value || 0) / 100,
+        aov: +$("#aov").value || 0,
+        margin: (+$("#margin").value || 0) / 100,
+        ship: +$("#ship").value || 0,
+        fixed: +$("#fixed").value || 0
+      };
+    }
+
+    function computeProjection(p){
+      // Here we treat "visits" as pageviews and CTR as ratio -> clicks
+      const clicks = p.visits * p.ctr;
+      const spend = clicks * p.cpc;
+      const leads = clicks * p.leadRate;
+      const sales = leads * p.saleRate;
+      const revenue = sales * p.aov;
+
+      const gross = revenue * p.margin;
+      const shipTotal = sales * p.ship;
+      const net = gross - spend - shipTotal - p.fixed;
+
+      const cac = sales > 0 ? (spend / sales) : 0;
+      return { clicks, spend, leads, sales, revenue, gross, shipTotal, net, cac };
+    }
+
+    function recalc(){
+      const p = getProjectionInputs();
+      const r = computeProjection(p);
+
+      $("#kClicks").textContent = fmtNum(Math.round(r.clicks));
+      $("#kLeads").textContent  = fmtNum(Math.round(r.leads));
+      $("#kSales").textContent  = fmtNum(Math.round(r.sales));
+      $("#kRevenue").textContent= fmtMoney(r.revenue);
+      $("#kSpend").textContent  = fmtMoney(r.spend);
+      $("#kCAC").textContent    = fmtMoney(r.cac);
+      $("#kGross").textContent  = fmtMoney(r.gross);
+      $("#kNet").textContent    = fmtMoney(r.net);
+
+      drawChart(p, r);
+    }
+
+    function saveProjection(){
+      const p = getProjectionInputs();
+      localStorage.setItem(PROJ_KEY, JSON.stringify({p, savedAt: new Date().toISOString()}));
+      $("#lastSaved").textContent = "Guardado: " + new Date().toLocaleString();
+    }
+
+    function loadProjection(){
+      const raw = localStorage.getItem(PROJ_KEY);
+      if(!raw) return;
+      try{
+        const {p, savedAt} = JSON.parse(raw);
+        $("#visits").value = p.visits ?? 0;
+        $("#ctr").value = ((p.ctr ?? 0) * 100).toFixed(2).replace(/\.00$/,"");
+        $("#cpc").value = p.cpc ?? 0;
+        $("#leadRate").value = ((p.leadRate ?? 0) * 100).toFixed(2).replace(/\.00$/,"");
+        $("#saleRate").value = ((p.saleRate ?? 0) * 100).toFixed(2).replace(/\.00$/,"");
+        $("#aov").value = p.aov ?? 0;
+        $("#margin").value = ((p.margin ?? 0) * 100).toFixed(2).replace(/\.00$/,"");
+        $("#ship").value = p.ship ?? 0;
+        $("#fixed").value = p.fixed ?? 0;
+        $("#lastSaved").textContent = "Último guardado: " + new Date(savedAt).toLocaleString();
+      }catch(e){}
+    }
+
+    // ========= Simple chart (no libs) =========
+    function drawChart(p, r){
+      const c = $("#chart");
+      const ctx = c.getContext("2d");
+      const W = c.width, H = c.height;
+      ctx.clearRect(0,0,W,H);
+
+      // Background grid
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(255,255,255,0)";
+      ctx.strokeStyle = "rgba(147,164,183,.12)";
+      ctx.lineWidth = 1;
+      for(let i=0;i<=6;i++){
+        const y = 20 + i*(H-50)/6;
+        ctx.beginPath(); ctx.moveTo(36,y); ctx.lineTo(W-16,y); ctx.stroke();
+      }
+
+      const bars = [
+        {label:"Ads", value: Math.max(0,r.spend)},
+        {label:"Entrega", value: Math.max(0,r.shipTotal)},
+        {label:"Fijos", value: Math.max(0,p.fixed)},
+        {label:"Utilidad", value: r.net}
+      ];
+
+      const maxAbs = Math.max(
+        ...bars.map(b => Math.abs(b.value)),
+        1
+      );
+
+      const originY = Math.round(H*0.72);
+      // Axis
+      ctx.strokeStyle = "rgba(147,164,183,.25)";
+      ctx.beginPath(); ctx.moveTo(36, originY); ctx.lineTo(W-16, originY); ctx.stroke();
+
+      const barW = 130;
+      const gap = 28;
+      const startX = 60;
+
+      bars.forEach((b, i) => {
+        const x = startX + i*(barW+gap);
+        const h = (Math.abs(b.value)/maxAbs) * 130;
+        const isNeg = b.value < 0;
+        const y = isNeg ? originY : originY - h;
+
+        // Bar
+        ctx.fillStyle = isNeg ? "rgba(251,113,133,.55)" : "rgba(45,212,191,.55)";
+        if(b.label !== "Utilidad"){
+          ctx.fillStyle = "rgba(124,92,255,.40)";
+        }
+        if(b.label === "Ads") ctx.fillStyle = "rgba(124,92,255,.45)";
+        if(b.label === "Entrega") ctx.fillStyle = "rgba(251,191,36,.40)";
+        if(b.label === "Fijos") ctx.fillStyle = "rgba(147,164,183,.35)";
+        if(b.label === "Utilidad") ctx.fillStyle = isNeg ? "rgba(251,113,133,.55)" : "rgba(45,212,191,.55)";
+
+        roundRect(ctx, x, y, barW, h, 14, true, false);
+
+        // Label
+        ctx.fillStyle = "rgba(234,242,255,.92)";
+        ctx.font = "12px " + getComputedStyle(document.documentElement).getPropertyValue('--mono');
+        ctx.fillText(b.label, x+10, originY+22);
+
+        // Value
+        ctx.fillStyle = "rgba(207,225,255,.92)";
+        ctx.font = "12px " + getComputedStyle(document.documentElement).getPropertyValue('--mono');
+        const valTxt = fmtMoney(b.value);
+        ctx.fillText(valTxt, x+10, originY+40);
+      });
+
+      // Header
+      ctx.fillStyle = "rgba(234,242,255,.95)";
+      ctx.font = "700 14px " + getComputedStyle(document.documentElement).getPropertyValue('--sans');
+      ctx.fillText("Estructura de costos vs utilidad (mensual)", 36, 18);
+
+      ctx.fillStyle = "rgba(147,164,183,.9)";
+      ctx.font = "12px " + getComputedStyle(document.documentElement).getPropertyValue('--sans');
+      ctx.fillText("Modelo: net = (ventas×ticket×margen) − ads − entrega − fijos", 36, H-10);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke){
+      if (typeof radius === 'number') radius = {tl: radius, tr: radius, br: radius, bl: radius};
+      ctx.beginPath();
+      ctx.moveTo(x + radius.tl, y);
+      ctx.lineTo(x + width - radius.tr, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+      ctx.lineTo(x + width, y + height - radius.br);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+      ctx.lineTo(x + radius.bl, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+      ctx.lineTo(x, y + radius.tl);
+      ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+      ctx.closePath();
+      if (fill) ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+
+    // ========= CRM / Leads =========
+    const LEADS_KEY = "fertri_leads_v1";
+
+    function getLeads(){
+      const raw = localStorage.getItem(LEADS_KEY);
+      if(!raw) return [];
+      try { return JSON.parse(raw) || []; } catch(e){ return []; }
+    }
+    function setLeads(list){
+      localStorage.setItem(LEADS_KEY, JSON.stringify(list));
+      renderLeads();
+    }
+
+    function badgeFor(stage){
+      const s = String(stage||"").toLowerCase();
+      if(s === "ganado") return "badge good";
+      if(s === "perdido") return "badge bad";
+      if(s === "negociación" || s === "cotizado") return "badge warn";
+      return "badge";
+    }
+
+    function addLead(){
+      const name = $("#leadName").value.trim();
+      const phone = $("#leadPhone").value.trim();
+      const product = $("#leadProduct").value.trim();
+      const stage = $("#leadStage").value;
+      const value = +$("#leadValue").value || 0;
+      const notes = $("#leadNotes").value.trim();
+
+      if(!name && !phone){
+        alert("Poné al menos nombre o teléfono para no crear un fantasma 👻");
+        return;
+      }
+
+      const lead = {
+        id: crypto.randomUUID(),
+        name, phone, product, stage, value, notes,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const leads = getLeads();
+      leads.unshift(lead);
+      setLeads(leads);
+      clearLeadForm();
+      updatePipelineSummary();
+    }
+
+    function clearLeadForm(){
+      $("#leadName").value = "";
+      $("#leadPhone").value = "";
+      $("#leadProduct").value = "";
+      $("#leadStage").value = "Nuevo";
+      $("#leadValue").value = "85";
+      $("#leadNotes").value = "";
+    }
+
+    function moveLead(id, stage){
+      const leads = getLeads();
+      const idx = leads.findIndex(l => l.id === id);
+      if(idx === -1) return;
+      leads[idx].stage = stage;
+      leads[idx].updatedAt = new Date().toISOString();
+      setLeads(leads);
+      updatePipelineSummary();
+    }
+
+    function delLead(id){
+      const leads = getLeads().filter(l => l.id !== id);
+      setLeads(leads);
+      updatePipelineSummary();
+    }
+
+    function renderLeads(){
+      const filter = $("#filterStage").value;
+      const leads = getLeads();
+      const rows = (filter === "Todos") ? leads : leads.filter(l => l.stage === filter);
+
+      const tbody = $("#leadRows");
+      tbody.innerHTML = "";
+
+      if(rows.length === 0){
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.className = "muted";
+        td.style.padding = "14px 10px";
+        td.textContent = "No hay leads todavía. Cargá demo o agregá el primero.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        updatePipelineSummary();
+        return;
+      }
+
+      rows.forEach(l => {
+        const tr = document.createElement("tr");
+
+        const tdLead = document.createElement("td");
+        tdLead.innerHTML = `
+          <div style="font-weight:800">${escapeHtml(l.name || "Sin nombre")}</div>
+          <div class="muted" style="font-size:12px">${escapeHtml(l.phone || "Sin contacto")} • ${escapeHtml(l.product || "—")}</div>
+          <div class="muted" style="font-size:11px">Creado: ${new Date(l.createdAt).toLocaleString()}</div>
+        `;
+
+        const tdStage = document.createElement("td");
+        tdStage.innerHTML = `<span class="${badgeFor(l.stage)}">${escapeHtml(l.stage)}</span>`;
+
+        const tdValue = document.createElement("td");
+        tdValue.textContent = fmtMoney(l.value || 0);
+
+        const tdAct = document.createElement("td");
+        tdAct.style.whiteSpace = "nowrap";
+        tdAct.innerHTML = `
+          <select data-id="${l.id}" class="stageSel">
+            ${["Nuevo","Calificado","Cotizado","Negociación","Ganado","Perdido"].map(s => `
+              <option value="${s}" ${s===l.stage?"selected":""}>${s}</option>
+            `).join("")}
+          </select>
+          <button class="btn secondary" style="padding:8px 10px; margin-left:6px" data-del="${l.id}">Borrar</button>
+        `;
+
+        tr.appendChild(tdLead);
+        tr.appendChild(tdStage);
+        tr.appendChild(tdValue);
+        tr.appendChild(tdAct);
+        tbody.appendChild(tr);
+      });
+
+      // bind events
+      document.querySelectorAll(".stageSel").forEach(sel => {
+        sel.addEventListener("change", (e) => moveLead(sel.dataset.id, e.target.value));
+      });
+      document.querySelectorAll("[data-del]").forEach(btn => {
+        btn.addEventListener("click", () => delLead(btn.dataset.del));
+      });
+
+      updatePipelineSummary();
+    }
+
+    function updatePipelineSummary(){
+      const leads = getLeads();
+      const total = leads.length;
+      const won = leads.filter(l => l.stage === "Ganado").length;
+      const rev = leads.filter(l => l.stage === "Ganado").reduce((a,b)=>a+(+b.value||0),0);
+      const close = total ? (won/total) : 0;
+
+      $("#pLeads").textContent = fmtNum(total);
+      $("#pWon").textContent = fmtNum(won);
+      $("#pRev").textContent = fmtMoney(rev);
+      $("#pClose").textContent = (close*100).toFixed(1) + "%";
+    }
+
+    function clearAll(){
+      if(!confirm("¿Borrar todos los leads guardados en este navegador?")) return;
+      localStorage.removeItem(LEADS_KEY);
+      renderLeads();
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // ========= Demo data / product seeds =========
+    function seedProducts(){
+      const text =
+`Productos ganadores (plantilla):
+1) Taladro 13mm (Hogar/Pro) + set brocas
+2) Amoladora 4.5" + discos corte/pulido
+3) Bomba de agua 1HP + válvula / conexión
+4) Escalera aluminio + guantes / lentes
+5) Juego herramientas 108pzs + caja
+
+Combos sugeridos:
+- Taladro + brocas + cinta métrica
+- Amoladora + discos + careta
+- Bomba + manguera + abrazaderas
+`;
+      $("#miniScript").textContent = text;
+      navigator.clipboard?.writeText(text).catch(()=>{});
+      alert("Listo: te dejé plantilla de productos/combos (copiada si tu navegador lo permite).");
+    }
+
+    function loadDemo(){
+      const demo = [
+        {name:"Carlos Pérez", phone:"+503 7123 4567", product:"Taladro 13mm (Pro)", stage:"Cotizado", value:115, notes:"Quiere entrega hoy. Zona Santa Tecla."},
+        {name:"Marta López", phone:"+503 7890 1111", product:"Bomba 1HP", stage:"Negociación", value:160, notes:"Pregunta por garantía y método de pago."},
+        {name:"José Rivera", phone:"+503 7001 9090", product:"Amoladora 4.5\"", stage:"Ganado", value:95, notes:"Vendida con 3 discos extra."},
+        {name:"Edgar", phone:"+503 7322 0000", product:"Juego herramientas 108pzs", stage:"Nuevo", value:85, notes:"Lo vio en anuncio, pidió opciones."}
+      ].map(d => ({
+        id: crypto.randomUUID(),
+        createdAt: new Date(Date.now()-Math.random()*6*864e5).toISOString(),
+        updatedAt: new Date().toISOString(),
+        ...d
+      }));
+
+      localStorage.setItem(LEADS_KEY, JSON.stringify(demo));
+      renderLeads();
+      updatePipelineSummary();
+      alert("Demo cargada. Ya podés jugar con etapas y ver el resumen.");
+    }
+
+    function exportData(){
+      const leads = getLeads();
+      if(leads.length === 0){
+        alert("No hay leads para exportar todavía.");
+        return;
+      }
+      const cols = ["createdAt","name","phone","product","stage","value","notes"];
+      const csv = [
+        cols.join(","),
+        ...leads.map(l => cols.map(k => csvCell(l[k])).join(","))
+      ].join("\n");
+
+      const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fertri-leads.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function csvCell(v){
+      const s = String(v ?? "").replaceAll('"','""');
+      return `"${s}"`;
+    }
+
+    // ========= Wiring =========
+    document.querySelectorAll("#projectionForm input").forEach(inp => {
+      inp.addEventListener("input", () => recalc());
+    });
+
+    $("#btnDemo").addEventListener("click", loadDemo);
+    $("#btnCTA").addEventListener("click", () => {
+      alert("Acción recomendada: activá campaña a WhatsApp + conecta tu agente IA a este CRM (etapas + notas).");
+      document.querySelector('#crm').scrollIntoView({behavior:'smooth'});
+    });
+
+    // init
+    loadProjection();
+    recalc();
+    renderLeads();
+    updatePipelineSummary();
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 44" fill="none">
+  <defs>
+    <linearGradient id="oGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2dbf"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <!-- Hexágono icono -->
+  <polygon points="22,4 36,4 44,18 36,32 22,32 14,18" fill="url(#oGrad)"/>
+  <text x="24" y="24" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">O</text>
+  <!-- Texto -->
+  <text x="54" y="20" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#0f2dbf">origins</text>
+  <text x="54" y="34" font-family="'Segoe UI',sans-serif" font-size="9" font-weight="500" fill="#64748b" letter-spacing="1.5">SYSTEM SOLUTION</text>
+</svg>
