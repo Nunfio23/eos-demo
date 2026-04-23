@@ -173,11 +173,12 @@ BEGIN
   -- ============================================================
   -- ALUMNOS
   -- ============================================================
+  -- parent_id en students referencia profiles.id (el UUID del perfil del padre, no el ID de la tabla parents)
   INSERT INTO public.students (user_id, enrollment_number, grade_level, section, parent_id, date_of_birth, blood_type, emergency_contact, is_active)
   VALUES
-    (uid_alumno1, 'EOS-2026-001', 'Septimo Grado', 'A', parent1_id, '2012-03-15', 'O+', 'Miguel Morales 7111-0009',  true),
-    (uid_alumno2, 'EOS-2026-002', 'Septimo Grado', 'A', parent2_id, '2012-07-22', 'A+', 'Laura Herrera 7111-0010',   true),
-    (uid_alumno3, 'EOS-2026-003', 'Octavo Grado',  'A', parent3_id, '2011-11-05', 'B+', 'Fernando Flores 7111-0011', true)
+    (uid_alumno1, 'EOS-2026-001', 'Septimo Grado', 'A', uid_padre1, '2012-03-15', 'O+', 'Miguel Morales 7111-0009',  true),
+    (uid_alumno2, 'EOS-2026-002', 'Septimo Grado', 'A', uid_madre1, '2012-07-22', 'A+', 'Laura Herrera 7111-0010',   true),
+    (uid_alumno3, 'EOS-2026-003', 'Octavo Grado',  'A', uid_padre2, '2011-11-05', 'B+', 'Fernando Flores 7111-0011', true)
   ON CONFLICT DO NOTHING;
 
   SELECT id INTO student1_id FROM public.students WHERE user_id = uid_alumno1 LIMIT 1;
