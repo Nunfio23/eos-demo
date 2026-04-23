@@ -33,20 +33,20 @@ INSERT INTO auth.users (
   is_super_admin
 )
 VALUES
-  ('00000001-eos0-0000-0000-000000000001','authenticated','authenticated','admin@eos.edu.sv',          crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Carlos Mendez","role":"master"}',        NOW(),NOW(),'','','','',false),
-  ('00000002-eos0-0000-0000-000000000002','authenticated','authenticated','director@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Ana Sofia Rivas","role":"direccion"}',   NOW(),NOW(),'','','','',false),
-  ('00000003-eos0-0000-0000-000000000003','authenticated','authenticated','administracion@eos.edu.sv', crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Roberto Fuentes","role":"administracion"}',NOW(),NOW(),'','','','',false),
-  ('00000004-eos0-0000-0000-000000000004','authenticated','authenticated','docente1@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Maria Elena Castillo","role":"docente"}', NOW(),NOW(),'','','','',false),
-  ('00000005-eos0-0000-0000-000000000005','authenticated','authenticated','docente2@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Jose Antonio Lopez","role":"docente"}',  NOW(),NOW(),'','','','',false),
-  ('00000006-eos0-0000-0000-000000000006','authenticated','authenticated','alumno1@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Diego Alejandro Morales","role":"alumno"}',NOW(),NOW(),'','','','',false),
-  ('00000007-eos0-0000-0000-000000000007','authenticated','authenticated','alumno2@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Sofia Isabel Herrera","role":"alumno"}', NOW(),NOW(),'','','','',false),
-  ('00000008-eos0-0000-0000-000000000008','authenticated','authenticated','alumno3@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Carlos Eduardo Flores","role":"alumno"}',NOW(),NOW(),'','','','',false),
-  ('00000009-eos0-0000-0000-000000000009','authenticated','authenticated','padre1@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Miguel Morales","role":"padre"}',        NOW(),NOW(),'','','','',false),
-  ('00000010-eos0-0000-0000-000000000010','authenticated','authenticated','madre1@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Laura Herrera","role":"padre"}',         NOW(),NOW(),'','','','',false),
-  ('00000011-eos0-0000-0000-000000000011','authenticated','authenticated','padre2@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Fernando Flores","role":"padre"}',       NOW(),NOW(),'','','','',false),
-  ('00000012-eos0-0000-0000-000000000012','authenticated','authenticated','contabilidad@eos.edu.sv',   crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Patricia Gomez","role":"contabilidad"}', NOW(),NOW(),'','','','',false),
-  ('00000013-eos0-0000-0000-000000000013','authenticated','authenticated','biblioteca@eos.edu.sv',     crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Sandra Martinez","role":"biblioteca"}',  NOW(),NOW(),'','','','',false),
-  ('00000014-eos0-0000-0000-000000000014','authenticated','authenticated','tienda@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Juan Carlos Perez","role":"tienda"}',   NOW(),NOW(),'','','','',false)
+  ('a1000001-0000-0000-0000-000000000001','authenticated','authenticated','admin@eos.edu.sv',          crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Carlos Mendez","role":"master"}',        NOW(),NOW(),'','','','',false),
+  ('a1000002-0000-0000-0000-000000000002','authenticated','authenticated','director@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Ana Sofia Rivas","role":"direccion"}',   NOW(),NOW(),'','','','',false),
+  ('a1000003-0000-0000-0000-000000000003','authenticated','authenticated','administracion@eos.edu.sv', crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Roberto Fuentes","role":"administracion"}',NOW(),NOW(),'','','','',false),
+  ('a1000004-0000-0000-0000-000000000004','authenticated','authenticated','docente1@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Maria Elena Castillo","role":"docente"}', NOW(),NOW(),'','','','',false),
+  ('a1000005-0000-0000-0000-000000000005','authenticated','authenticated','docente2@eos.edu.sv',       crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Jose Antonio Lopez","role":"docente"}',  NOW(),NOW(),'','','','',false),
+  ('a1000006-0000-0000-0000-000000000006','authenticated','authenticated','alumno1@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Diego Alejandro Morales","role":"alumno"}',NOW(),NOW(),'','','','',false),
+  ('a1000007-0000-0000-0000-000000000007','authenticated','authenticated','alumno2@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Sofia Isabel Herrera","role":"alumno"}', NOW(),NOW(),'','','','',false),
+  ('a1000008-0000-0000-0000-000000000008','authenticated','authenticated','alumno3@eos.edu.sv',        crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Carlos Eduardo Flores","role":"alumno"}',NOW(),NOW(),'','','','',false),
+  ('a1000009-0000-0000-0000-000000000009','authenticated','authenticated','padre1@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Miguel Morales","role":"padre"}',        NOW(),NOW(),'','','','',false),
+  ('a1000010-0000-0000-0000-000000000010','authenticated','authenticated','madre1@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Laura Herrera","role":"padre"}',         NOW(),NOW(),'','','','',false),
+  ('a1000011-0000-0000-0000-000000000011','authenticated','authenticated','padre2@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Fernando Flores","role":"padre"}',       NOW(),NOW(),'','','','',false),
+  ('a1000012-0000-0000-0000-000000000012','authenticated','authenticated','contabilidad@eos.edu.sv',   crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Patricia Gomez","role":"contabilidad"}', NOW(),NOW(),'','','','',false),
+  ('a1000013-0000-0000-0000-000000000013','authenticated','authenticated','biblioteca@eos.edu.sv',     crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Sandra Martinez","role":"biblioteca"}',  NOW(),NOW(),'','','','',false),
+  ('a1000014-0000-0000-0000-000000000014','authenticated','authenticated','tienda@eos.edu.sv',         crypt('EOS2026!',gen_salt('bf')),NOW(),'{"provider":"email","providers":["email"]}','{"full_name":"Juan Carlos Perez","role":"tienda"}',   NOW(),NOW(),'','','','',false)
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
@@ -73,20 +73,20 @@ UPDATE public.profiles SET role='tienda',        phone='7111-0014' WHERE email='
 -- ============================================================
 DO $$
 DECLARE
-  uid_master        UUID := '00000001-eos0-0000-0000-000000000001';
-  uid_direccion     UUID := '00000002-eos0-0000-0000-000000000002';
-  uid_admin         UUID := '00000003-eos0-0000-0000-000000000003';
-  uid_docente1      UUID := '00000004-eos0-0000-0000-000000000004';
-  uid_docente2      UUID := '00000005-eos0-0000-0000-000000000005';
-  uid_alumno1       UUID := '00000006-eos0-0000-0000-000000000006';
-  uid_alumno2       UUID := '00000007-eos0-0000-0000-000000000007';
-  uid_alumno3       UUID := '00000008-eos0-0000-0000-000000000008';
-  uid_padre1        UUID := '00000009-eos0-0000-0000-000000000009';
-  uid_madre1        UUID := '00000010-eos0-0000-0000-000000000010';
-  uid_padre2        UUID := '00000011-eos0-0000-0000-000000000011';
-  uid_contabilidad  UUID := '00000012-eos0-0000-0000-000000000012';
-  uid_biblioteca    UUID := '00000013-eos0-0000-0000-000000000013';
-  uid_tienda        UUID := '00000014-eos0-0000-0000-000000000014';
+  uid_master        UUID := 'a1000001-0000-0000-0000-000000000001';
+  uid_direccion     UUID := 'a1000002-0000-0000-0000-000000000002';
+  uid_admin         UUID := 'a1000003-0000-0000-0000-000000000003';
+  uid_docente1      UUID := 'a1000004-0000-0000-0000-000000000004';
+  uid_docente2      UUID := 'a1000005-0000-0000-0000-000000000005';
+  uid_alumno1       UUID := 'a1000006-0000-0000-0000-000000000006';
+  uid_alumno2       UUID := 'a1000007-0000-0000-0000-000000000007';
+  uid_alumno3       UUID := 'a1000008-0000-0000-0000-000000000008';
+  uid_padre1        UUID := 'a1000009-0000-0000-0000-000000000009';
+  uid_madre1        UUID := 'a1000010-0000-0000-0000-000000000010';
+  uid_padre2        UUID := 'a1000011-0000-0000-0000-000000000011';
+  uid_contabilidad  UUID := 'a1000012-0000-0000-0000-000000000012';
+  uid_biblioteca    UUID := 'a1000013-0000-0000-0000-000000000013';
+  uid_tienda        UUID := 'a1000014-0000-0000-0000-000000000014';
 
   teacher1_id  UUID;
   teacher2_id  UUID;
